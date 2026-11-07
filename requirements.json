@@ -49,6 +49,34 @@
       "remove": ["pgAdmin 4", "StackBuilder"],
       "for": ["sadak"],
       "note": "Binaries only, not a Windows service. Each project creates its own database cluster and data folder."
+    },
+    {
+      "name": "Python 3.11",
+      "type": "winget",
+      "id": "Python.Python.3.11",
+      "for": ["memorylane"],
+      "note": "Same version as the project's CI and Docker image."
+    },
+    {
+      "name": "Node.js 20",
+      "type": "winget",
+      "id": "OpenJS.NodeJS.20",
+      "for": ["memorylane"],
+      "note": "Same major version as the project's CI and Docker image."
+    },
+    {
+      "name": "Docker Desktop",
+      "type": "winget",
+      "id": "Docker.DockerDesktop",
+      "for": ["memorylane"],
+      "note": "Runs Solr and the full stack with Docker Compose. Needs WSL 2."
+    },
+    {
+      "name": "Google Chrome",
+      "type": "winget",
+      "id": "Google.Chrome",
+      "for": ["memorylane"],
+      "note": "For loading the unpacked browser extension."
     }
   ]
 }
