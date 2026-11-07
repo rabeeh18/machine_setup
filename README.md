@@ -43,7 +43,8 @@ These rules apply to anyone editing this repo, including assistants working on o
 4. **Add `"optional": true`** for nice-to-haves.
 5. **Add a `note`** for anything a future reader needs to know.
 6. **Keep this file about installs only.** Project setup steps (databases, env files, seeds) belong in that project's own `HANDOFF.md`.
-7. **Test before committing:** run `install.ps1 -DryRun` and check that your entry appears correctly.
+7. **Test before committing:** run `install.ps1 -DryRun` and check that your entry appears correctly. The script refuses to run, and lists the problems, if two entries share a winget id, an install folder or a name, or if a required field is missing. Fix those before committing.
+8. **Pull before editing and before pushing,** because other projects edit this file too. If a pull conflicts in `requirements.json`, keep both sides' entries, then run the dry run again.
 
 ### Entry examples
 

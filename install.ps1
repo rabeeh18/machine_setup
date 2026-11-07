@@ -140,6 +140,27 @@ function Setup-Git {
 
 # ------------------------------------------------------------------ run
 
+# ------------------------------------------------------------------ list checks
+# Refuse to run on a list with duplicates or missing fields, so a dry run catches them before a push.
+$problems = @()
+$problems += $req.tools | Where-Object { $_.type -eq 'winget' } | Group-Object { $_.id.ToLower() } | Where-Object Count -gt 1 |
+    ForEach-Object { "winget id '$($_.Name)' is listed $($_.Count) times; merge them and combine their 'for' lists" }
+$problems += $req.tools | Where-Object { $_.type -eq 'zip' } | Group-Object { $_.to.ToLower().TrimEnd('\') } | Where-Object Count -gt 1 |
+    ForEach-Object { "install folder '$($_.Name)' is used by $($_.Count) entries" }
+$problems += $req.tools | Group-Object { $_.name.ToLower() } | Where-Object Count -gt 1 |
+    ForEach-Object { "name '$($_.Name)' is listed $($_.Count) times" }
+foreach ($t in $req.tools) {
+    if (-not $t.for -or @($t.for).Count -eq 0) { $problems += "'$($t.name)' has an empty 'for' list" }
+    if ($t.type -eq 'winget' -and -not $t.id) { $problems += "'$($t.name)' is a winget entry without an 'id'" }
+    if ($t.type -eq 'zip' -and (-not $t.to -or -not $t.check -or -not $t.source)) { $problems += "'$($t.name)' is a zip entry missing 'source', 'to' or 'check'" }
+    if (@($t.for) | Group-Object | Where-Object Count -gt 1) { $problems += "'$($t.name)' lists the same project twice in 'for'" }
+}
+if ($problems) {
+    Say "requirements.json has problems; nothing was installed:" 'Red'
+    $problems | ForEach-Object { Say "  - $_" 'Red' }
+    exit 2
+}
+
 if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
     Say 'winget is missing. Install "App Installer" from the Microsoft Store, then run this again.' 'Red'
     exit 1
