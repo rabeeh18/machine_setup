@@ -1,0 +1,54 @@
+{
+  "git": {
+    "name": "rabeeh18",
+    "email": "rabeeh.ahmad@gmail.com",
+    "defaultBranch": "main"
+  },
+  "tools": [
+    {
+      "name": "Git",
+      "type": "winget",
+      "id": "Git.Git",
+      "for": ["all"],
+      "note": "Includes Git Credential Manager, which handles GitHub sign-in."
+    },
+    {
+      "name": "GitHub CLI",
+      "type": "winget",
+      "id": "GitHub.cli",
+      "for": ["all"],
+      "note": "Optional helper for GitHub (repos, PRs). Signs in once with 'gh auth login'."
+    },
+    {
+      "name": "Claude",
+      "type": "winget",
+      "id": "Anthropic.Claude",
+      "for": ["all"]
+    },
+    {
+      "name": "Visual Studio Code",
+      "type": "winget",
+      "id": "Microsoft.VisualStudioCode",
+      "for": ["all"],
+      "optional": true
+    },
+    {
+      "name": "Temurin JDK 21",
+      "type": "zip",
+      "source": "adoptium:21",
+      "to": "D:\\Dev\\jdk-21",
+      "check": "bin\\java.exe",
+      "for": ["sadak"]
+    },
+    {
+      "name": "PostgreSQL 17",
+      "type": "zip",
+      "source": "postgres:17",
+      "to": "D:\\Dev\\pgsql",
+      "check": "bin\\postgres.exe",
+      "remove": ["pgAdmin 4", "StackBuilder"],
+      "for": ["sadak"],
+      "note": "Binaries only, not a Windows service. Each project creates its own database cluster and data folder."
+    }
+  ]
+}
